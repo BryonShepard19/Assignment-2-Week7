@@ -101,3 +101,56 @@ const sampleTracks = [
 ];
 
 // Seed database with sample data
+const { sequelize, Track } = require("./setup");
+
+const sampleTracks = [
+  {
+    songTitle: "Blinding Lights",
+    artistName: "The Weeknd",
+    albumName: "After Hours",
+    genre: "Pop",
+    duration: 200,
+    releaseYear: 2019,
+  },
+  {
+    songTitle: "Lose Yourself",
+    artistName: "Eminem",
+    albumName: "8 Mile",
+    genre: "Hip-Hop",
+    duration: 326,
+    releaseYear: 2002,
+  },
+  {
+    songTitle: "Bohemian Rhapsody",
+    artistName: "Queen",
+    albumName: "A Night at the Opera",
+    genre: "Rock",
+    duration: 354,
+    releaseYear: 1975,
+  },
+  {
+    songTitle: "Bad Guy",
+    artistName: "Billie Eilish",
+    albumName: "When We All Fall Asleep, Where Do We Go?",
+    genre: "Pop",
+    duration: 194,
+    releaseYear: 2019,
+  },
+];
+
+async function seedDatabase() {
+  try {
+    await sequelize.authenticate();
+    console.log("Connected to database.");
+
+    await Track.bulkCreate(sampleTracks);
+    console.log("Sample tracks inserted.");
+
+    await sequelize.close();
+    console.log("Database connection closed.");
+  } catch (error) {
+    console.error("Seeding failed:", error);
+  }
+}
+
+seedDatabase();
